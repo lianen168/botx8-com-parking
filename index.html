@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botx8 | AI Infinity Nexus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #00d4ff;
+            --accent: #ff0080;
+            --highlight: #ff8c00;
+            --dark-bg: #0a0a16;
+            --card-bg: rgba(15, 20, 40, 0.8);
+            --text-light: #e0e0ff;
+            --text-dim: #a0a0ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(106, 17, 203, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 85% 75%, rgba(0, 212, 255, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 128, 0.08) 0%, transparent 40%);
+            position: relative;
+        }
+        
+        /* Animated background elements */
+        .bg-particle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(var(--color-rgb), 0.1);
+            filter: blur(10px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 3rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1.5px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            color: var(--text-dim);
+            letter-spacing: 4px;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+        
+        .price-tag {
+            background: rgba(25, 30, 60, 0.85);
+            border: 1px solid rgba(106, 17, 203, 0.5);
+            border-radius: 12px;
+            padding: 18px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .price-tag:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .price-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .price-installment {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 70px 20px 40px;
+        }
+        
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            max-width: 1000px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 300%;
+            animation: gradient 10s ease infinite;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-dim);
+            max-width: 850px;
+            margin-bottom: 60px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        
+        .domain-display {
+            position: relative;
+            margin: 50px 0;
+            perspective: 1000px;
+        }
+        
+        .domain-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: transparent;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(106, 17, 203, 0.5);
+            letter-spacing: 3px;
+            animation: domainGlow 4s ease-in-out infinite alternate;
+        }
+        
+        .domain-breakdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(106, 17, 203, 0.4);
+            backdrop-filter: blur(10px);
+            max-width: 900px;
+        }
+        
+        .domain-element {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-width: 160px;
+            transition: all 0.3s ease;
+        }
+        
+        .domain-element:hover {
+            transform: translateY(-10px);
+        }
+        
+        .element-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+        
+        .bot { color: var(--secondary); }
+        .x { color: var(--accent); }
+        .eight { color: var(--highlight); }
+        
+        .element-label {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .element-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-top: 8px;
+            max-width: 140px;
+        }
+        
+        .domain-summary {
+            background: rgba(10, 15, 30, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            max-width: 800px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+        
+        .summary-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .summary-text {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+        
+        .char-count {
+            display: inline-block;
+            background: rgba(106, 17, 203, 0.3);
+            color: var(--secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin: 0 5px;
+        }
+        
+        .contact-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.2), rgba(0, 212, 255, 0.2));
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            animation: shine 3s infinite linear;
+        }
+        
+        .contact-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: 20px 40px;
+            border-radius: 12px;
+            background: rgba(20, 25, 50, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+        
+        .email-link:hover {
+            background: rgba(30, 35, 70, 0.9);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.3);
+            color: var(--text-light);
+        }
+        
+        .applications {
+            margin-top: 80px;
+            width: 100%;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 35px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .app-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .app-card:hover::before {
+            left: 100%;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .app-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .app-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.6rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .app-desc {
+            color: var(--text-dim);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .app-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .app-tag {
+            background: rgba(106, 17, 203, 0.2);
+            color: var(--text-light);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            margin-top: 80px;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+        
+        .infinity-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            gap: 20px;
+        }
+        
+        .infinity-symbol {
+            font-size: 3rem;
+            color: var(--accent);
+            animation: spin 20s linear infinite;
+            display: inline-block;
+        }
+        
+        .pulse-line {
+            height: 3px;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            animation: pulseLine 2s infinite ease-in-out;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes domainGlow {
+            0% { text-shadow: 0 0 20px rgba(106, 17, 203, 0.5); }
+            100% { text-shadow: 0 0 40px rgba(0, 212, 255, 0.7), 0 0 60px rgba(106, 17, 203, 0.5); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulseLine {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        @media (max-width: 992px) {
+            .title {
+                font-size: 3.2rem;
+            }
+            
+            .domain-name {
+                font-size: 3.5rem;
+            }
+            
+            .element-value {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .domain-name {
+                font-size: 2.8rem;
+            }
+            
+            .logo-text {
+                font-size: 2.5rem;
+            }
+            
+            .element-value {
+                font-size: 2.2rem;
+            }
+            
+            .element-label {
+                font-size: 1rem;
+            }
+            
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .email-link {
+                font-size: 1.4rem;
+                padding: 15px 25px;
+            }
+            
+            .domain-breakdown {
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .domain-element {
+                min-width: 120px;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .domain-name {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .price-amount {
+                font-size: 1.6rem;
+            }
+            
+            .contact-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <div>
+                    <div class="logo-text">BOTX8</div>
+                    <div class="logo-subtitle">AI ∞ INFINITE MYSTERY</div>
+                </div>
+            </div>
+            
+            <div class="price-tag">
+                <div class="price-amount">$8,000 USD</div>
+                <div class="price-installment">8 Installment Plan Available</div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <h1 class="title">
+                <span class="gradient-text">Where AI Mystery Meets</span> 
+                <br>
+                <span class="gradient-text">Infinite Prosperity</span>
+            </h1>
+            
+            <p class="subtitle">
+                The nexus of artificial intelligence, unlimited potential, and prosperous technology.
+                A domain that embodies the mysterious X-factor combined with the infinite power of 8.
+            </p>
+            
+            <div class="infinity-animation">
+                <div class="pulse-line"></div>
+                <div class="infinity-symbol">∞</div>
+                <div class="pulse-line"></div>
+            </div>
+            
+            <div class="domain-display">
+                <div class="domain-name">BOTX8.COM</div>
+            </div>
+            
+            <div class="domain-breakdown">
+                <div class="domain-element">
+                    <div class="element-value bot">BOT</div>
+                    <div class="element-label">AI Robot</div>
+                    <div class="element-desc">Artificial Intelligence & Robotics</div>
+                </div>
+                
+                <div class="domain-element">
+                    <div class="element-value x">X</div>
+                    <div class="element-label">Mystery & Infinity</div>
+                    <div class="element-desc">Unknown Potential & Limitless Possibilities</div>
+                </div>
+                
+                <div class="domain-element">
+                    <div class="element-value eight">8</div>
+                    <div class="element-label">Prosperity & ∞</div>
+                    <div class="element-desc">Wealth, Fortune & Infinite Expansion</div>
+                </div>
+            </div>
+            
+            <div class="domain-summary">
+                <h3 class="summary-title">Domain Composition</h3>
+                <p class="summary-text">
+                    <strong>BOTX8.COM</strong> is a powerful <span class="char-count">5-character</span> domain combining three potent elements: 
+                    <strong>BOT</strong> (AI Robotics), <strong>X</strong> (Mystery & Unlimited Potential), and <strong>8</strong> (Prosperity & Infinity). 
+                    This domain represents the convergence of advanced artificial intelligence with boundless possibilities and prosperous outcomes.
+                </p>
+            </div>
+            
+            <div class="contact-section">
+                <h2 class="contact-title">Domain Acquisition Inquiry</h2>
+                <p style="margin-bottom: 30px; color: var(--text-dim); font-size: 1.2rem;">
+                    Serious inquiries only. Premium domain for visionary projects.
+                </p>
+                <a href="mailto:joshua369x@gmail.com" class="email-link">
+                    <i class="fas fa-paper-plane"></i>
+                    joshua369x@gmail.com
+                </a>
+            </div>
+            
+            <div class="applications">
+                <h2 class="section-title">Ideal Applications for Botx8.com</h2>
+                
+                <div class="app-grid">
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3 class="app-title">Mysterious AI Platforms</h3>
+                        <p class="app-desc">Unexplained AI systems with hidden capabilities and secret algorithms that promise infinite expansion and mysterious outcomes.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Secret AI</span>
+                            <span class="app-tag">Hidden Tech</span>
+                            <span class="app-tag">X-Factor</span>
+                        </div>
+                    </div>
+                    
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-chart-network"></i>
+                        </div>
+                        <h3 class="app-title">Prosperity AI Systems</h3>
+                        <p class="app-desc">AI-driven wealth generation platforms that combine mysterious algorithms with prosperity-focused outcomes for financial growth.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Wealth AI</span>
+                            <span class="app-tag">Financial Bots</span>
+                            <span class="app-tag">Prosperity</span>
+                        </div>
+                    </div>
+                    
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3 class="app-title">Secretive Robotics</h3>
+                        <p class="app-desc">Confidential robotics projects with undisclosed capabilities, combining AI with mysterious hardware for specialized applications.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Confidential</span>
+                            <span class="app-tag">Special Ops</span>
+                            <span class="app-tag">X-Bots</span>
+                        </div>
+                    </div>
+                    
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <h3 class="app-title">Infinite AI Scaling</h3>
+                        <p class="app-desc">AI platforms designed for limitless expansion, where X represents unknown scaling potential and 8 symbolizes infinite growth.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Scalability</span>
+                            <span class="app-tag">Growth</span>
+                            <span class="app-tag">Expansion</span>
+                        </div>
+                    </div>
+                    
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="app-title">Mystery Gaming AI</h3>
+                        <p class="app-desc">Advanced gaming AI with unpredictable behaviors and mysterious decision-making processes for immersive gameplay experiences.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Gaming</span>
+                            <span class="app-tag">NPC AI</span>
+                            <span class="app-tag">Unpredictable</span>
+                        </div>
+                    </div>
+                    
+                    <div class="app-card">
+                        <div class="app-icon">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <h3 class="app-title">X-Factor AI Research</h3>
+                        <p class="app-desc">Research labs focusing on the mysterious "X-factor" in AI - the unknown elements that create breakthrough technologies.</p>
+                        <div class="app-tags">
+                            <span class="app-tag">Research</span>
+                            <span class="app-tag">Breakthrough</span>
+                            <span class="app-tag">Innovation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 BOTX8.COM — AI Mystery ∞ Infinite Prosperity</p>
+            <p>Premium Domain Available for Acquisition | Serious Inquiries: joshua369x@gmail.com</p>
+            <p style="margin-top: 20px; font-size: 0.85rem; opacity: 0.7;">BOT + X + 8 = Unlimited AI Potential</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create animated background particles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating particles
+            const colors = [
+                {rgb: "106, 17, 203", name: "primary"},
+                {rgb: "0, 212, 255", name: "secondary"},
+                {rgb: "255, 0, 128", name: "accent"},
+                {rgb: "255, 140, 0", name: "highlight"}
+            ];
+            
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'bg-particle';
+                
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.setProperty('--color-rgb', color.rgb);
+                
+                const size = Math.random() * 120 + 30;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                particle.style.left = `${startX}vw`;
+                particle.style.top = `${startY}vh`;
+                
+                document.body.appendChild(particle);
+                
+                // Animate particle
+                const duration = Math.random() * 40 + 30;
+                const keyframes = [
+                    { transform: `translate(0, 0)`, opacity: 0.1 },
+                    { transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`, opacity: 0.3 },
+                    { transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`, opacity: 0.1 }
+                ];
+                
+                particle.animate(keyframes, {
+                    duration: duration * 1000,
+                    iterations: Infinity,
+                    direction: 'alternate',
+                    easing: 'ease-in-out'
+                });
+            }
+            
+            // Add interactive hover effects to domain elements
+            const domainElements = document.querySelectorAll('.domain-element');
+            domainElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    const valueElement = this.querySelector('.element-value');
+                    valueElement.style.transform = 'scale(1.2)';
+                    valueElement.style.transition = 'transform 0.3s ease';
+                });
+                
+                element.addEventListener('mouseleave', function() {
+                    const valueElement = this.querySelector('.element-value');
+                    valueElement.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Add email link interaction
+            const emailLink = document.querySelector('.email-link');
+            emailLink.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('i');
+                icon.style.transform = 'rotate(20deg) scale(1.2)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+            
+            emailLink.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('i');
+                icon.style.transform = 'rotate(0deg) scale(1)';
+            });
+            
+            // Add scroll animation for app cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe app cards
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+            
+            // Dynamic title effect
+            const title = document.querySelector('.title');
+            let hue = 0;
+            
+            setInterval(() => {
+                hue = (hue + 1) % 360;
+                title.style.filter = `hue-rotate(${hue}deg)`;
+            }, 100);
+        });
+    </script>
+</body>
+</html>
